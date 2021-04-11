@@ -1,10 +1,5 @@
 
-function getTotalLikes( userArray, username ){
-  // find the correct user
-  const user = userArray.find( user => {
-    return user.username === username
-  })
-
+function getTotalLikes( user ){
   // iterate through the blog entries and sum the like values
   const totalLikes = user.blogs.reduce( (total, blog) => {
     return total += blog.likes
@@ -13,11 +8,7 @@ function getTotalLikes( userArray, username ){
   return totalLikes
 }
 
-function getMostPopularBlog( userArray, username ){
-  // find the correct user
-  const user = userArray.find( user => {
-    return user.username === username
-  })
+function getMostPopularBlog( user ){
   // Iterate through users blogs, and update the tracking object to
   // continually have the index of the blog with most likes, and the 
   // number of likes for comparison
