@@ -3,12 +3,12 @@
 Unit testing is an integral part of Test-Driven Development (TDD) which is the process of defining the desired actions of a function and what we expect it to do (or not do) before we begin work on the actual function. Approaching software development in this fashion serves a number of purposes:
 
 * this process can help define a path to success by outlining the tasks that must be done over the course of the function. 
-* this process can help identify edge case scenarios and ensure that your code continues to function as expected in these situations. 
-* this process also ensures that as the codebase continues to grow and be modified, that changes to other parts of the codebase do not negatively effect the performance of the tested function.
+* this process can help identify edge-case scenarios and ensure that your code continues to function as expected in these situations. 
+* As the codebase continues to grow and be modified, this process also ensures that changes to other parts of the codebase do not negatively effect the performance of the tested function.
 
-Programming languages each have their own frameworks for developings unit tests. For Javascript, Jest is one of the most widely used testing frameworks, and I hope this blog serves as a beginner's guide for those looking to get started in writing their own Jest tests.
+Programming languages have their own frameworks for developing unit tests. For Javascript, Jest is one of the most widely used testing frameworks, and I hope this blog serves as a beginner's guide for those looking to get started in writing their own Jest tests.
 
-We will walk through the process of setting up basic Jest tests and the files, but you can view the repo containing all of the code [here](https://github.com/dsasse07/jest-example)
+We will walk through the process of setting up basic Jest tests and the files, but you can view [the repo containing all of the code here](https://github.com/dsasse07/jest-example)
 
 
 ## Contents
@@ -67,14 +67,14 @@ const user = {
 ```
 
 We will be writing two functions, 
-* `getTotalLikes`: to get the total number of likes that a passed in user has for all of their posts
-* `getMostPopularBlog` should return the blog object of a specified user that has the most likes.
+* `getTotalLikes` to get the total number of likes of the given user's posts,
+* `getMostPopularBlog` to return the blog object of a specified user with the most likes.
 
 Following the TDD process, we will develop tests for these functions prior to working out the logic for the functions themselves.
 
 ## Initializing the Test File
 
-Typically tests are written into a `tests` or `__tests__` subdirectory of the app, and we will follow this same convention. From the root of our example project, let's make a tests directory and the file which will contain our tests.
+Typically, tests are written in a `tests` or `__tests__` subdirectory of the app, and we will follow this same convention. From the root of our example project, let's create a `tests` directory and the file which will contain our tests.
 ```sh
 mkdir tests && cd tests && touch exampleFunctions.test.js
 ```
@@ -104,10 +104,14 @@ const user = {
   }
 ```
 ## Writing tests
-Tests typically contain these general components. 
-* a `describe` function is invoked which accepts a string (a description that will appear in the terminal when tests are run, which "describes" the test block) and a callback function which will contain the individual tests.
-* One or more `test` function invocations which accepts a string describing the action of the specific test, and a callback function containing an `expect` function and a `matcher` function.
-  * The `expect` function accepts the function invocation being tested, and is chained to the `matcher` which describes the expected results.
+Tests typically contain these general components: 
+* a `describe` function is invoked which accepts two arguments: 
+  * a string (a description that will appear in the terminal when tests are run, which "describes" the test block)
+  * a callback function which will contain the individual tests..
+* One (or more) `test` function which accepts two arguments: 
+  * a string describing the action of the specific test, 
+  * a callback function containing an `expect` function and a `matcher` function.
+    * The `expect` function accepts the function invocation being tested, and is chained to the `matcher` which describes the expected results.
 
 In the `getTotalLikes` function, we __expect__ that when the function is passed a user object, the return value __will be__ an integer that is the sum of the `likes` on all of the blogs of that user. Including this into our test file would look like this:
 ```js
@@ -146,9 +150,9 @@ Here, the `.toBe` matcher is used to define the expected output of the function 
 * `toMatch` accepts a Regex pattern to match a string output
 * `toContain` can be used to see if a value is contained in an Array
 
-More common Jest Matchers can be found in the official introduction [here](https://jestjs.io/docs/using-matchers) or a complete list can be foudn in the official docs [here](https://jestjs.io/docs/expect)
+More common Jest Matchers can be found in the [official introduction here](https://jestjs.io/docs/using-matchers) or a complete list can be found [in the official docs here](https://jestjs.io/docs/expect)
 
-For our second function, we can define the expected output object within the `describe` block's scope and pass this object in to our matcher. Doing this, we will again be checking for equality, however when dealing with objects, we must use `.toEqual` instead, which iterates through all of the values of the objects to check for equality.
+For our second function, we can define the expected output object within the `describe` block's scope and pass this object into our matcher. Doing this, we will again be checking for equality; however when dealing with objects, we must use `.toEqual` instead, which iterates through all of the values of the objects to check for equality.
 
 With this in mind, we must add this final `describe` block to our test file:
 
@@ -165,7 +169,7 @@ describe('getMostPopularBlog', () => {
 })
 ```
 ## Running the Tests
-The tests we have written should clearly fail because we have not yet written the functions, however we can run the test to ensure that they are properly setup.
+The tests we have written should clearly fail because we have not yet written the functions; however, we can run the test to ensure that they are properly set up.
 
 To run the tests, run `npm test` (which matches the command we defined in the `package.json`). We are wonderfully greeted with the expected failures that our functions are not defined, and it indicates that our test file is prepared.
 
@@ -182,7 +186,7 @@ To run the tests, run `npm test` (which matches the command we defined in the `p
 ```
 
 ## Writing the functions
-At the root of our example project, lets make the file that will contain our functions. The name of the file should match the filename of the test file, minus the `.test` extension.
+Create a new file in `/jest-example` which will contain our functions. The name of the file should match the filename of the test file, minus the `.test` extension.
 
 In `/jest-example`
 ```sh
@@ -199,7 +203,7 @@ function getMostPopularBlog( user){
 }
 module.exports = { getTotalLikes, getMostPopularBlog }
 ```
-If we save and run our tests again, we will see that all four tests still fail (which is expected), but Jest provides a ne message to us indicated what happened.
+If we save and run our tests again, we will see that all four tests still fail (which is expected), but Jest provides a ne message to us indicating what happened.
 
 ```js
   getTotalLikes
@@ -214,7 +218,7 @@ If we save and run our tests again, we will see that all four tests still fail (
     Expected: 230
     Received: undefined
 ```
-This message indicates that our test is able to find the matching function, unlike before, but now instead of getting the expected value that was passed to the `matcher`, no value is being returned from our function. Lets implement the logic for our two functions as shown below:
+This message indicates that our test is able to find the matching function, unlike before, but now instead of getting the expected value that was passed to the `matcher`, no value is being returned from our function. Let's implement the logic for our two functions as shown below:
 
 ```js
 
@@ -267,7 +271,7 @@ Time:        0.713 s, estimated 1 s
 
 ## Conclusion
 
-Testing is powerful. Even with these limited tests, we would would be able to see if changes further along in the development process negatively impact the work we have already done. For example, if the structure of the API response that we used to build the `user` object changed, running the test file would indicate an issue prior to that change going into effect. This is especially important in development teams, where multiple developers are working on the same codebase. The tests help ensure that each developer's code remains compatible and functional with each others'.
+Testing is powerful. Even with these limited tests, we would would be able to see if changes further along in the development process negatively impact the work we have already done. For example, if the structure of the API response that we used to build the `user` object changed, running the test file would indicate an issue prior to that change going into effect. This is especially important in development teams, where multiple developers are working on the same codebase. The tests help ensure that new code remains compatible and functional with the codebase and with that of other developers.
 
 However, the reliability and power of testing is limited by the comprehensiveness of the test scenarios. As you are building tests, remember to consider the edge case scenarios that could break the function of your application, and write tests to simulate those. For example:
 * What would we expect to happen if the user was not found?
